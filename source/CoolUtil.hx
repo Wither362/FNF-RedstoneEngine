@@ -8,8 +8,6 @@ import lime.utils.AssetManifest;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
-#else
-import openfl.utils.Assets;
 #end
 
 using StringTools;
@@ -27,7 +25,7 @@ class CoolUtil
 
 	public static var curFreeplayGP:Int = 0;
 
-	public static function getDifficultyFilePath(num:Null<Int> = null)
+	public static function getDifficultyFilePath(?num:Int)
 	{
 		if(num == null) num = PlayState.storyDifficulty;
 
@@ -74,44 +72,44 @@ class CoolUtil
 
 	//Example: "winter-horrorland" to "Winter Horrorland". Used for replays
 	public static function coolSongFormatter(song:String):String
-    {
-        var swag:String = coolReplace(song, '-', ' ');
-        var splitSong:Array<String> = swag.split(' ');
+	{
+		var swag:String = coolReplace(song, '-', ' ');
+		var splitSong:Array<String> = swag.split(' ');
 
 		for (i in 0...splitSong.length)
 		{
-            var firstLetter = splitSong[i].substring(0, 1);
-            var coolSong:String = coolReplace(splitSong[i], firstLetter, firstLetter.toUpperCase());
+			var firstLetter = splitSong[i].substring(0, 1);
+			var coolSong:String = coolReplace(splitSong[i], firstLetter, firstLetter.toUpperCase());
 			var splitCoolSong:Array<String> = coolSong.split('');
 
 			coolSong = Std.string(splitCoolSong[0]).toUpperCase();
 
 			for (e in 0...splitCoolSong.length)
-				coolSong += Std.string(splitCoolSong[e+1]).toLowerCase();
+				coolSong += Std.string(splitCoolSong[e + 1]).toLowerCase();
 
 			coolSong = coolReplace(coolSong, 'null', '');
 
-            for (l in 0...splitSong.length)
-            {
-                var stringSong:String = Std.string(splitSong[l+1]);
-                var stringFirstLetter:String = stringSong.substring(0, 1);
+			for (l in 0...splitSong.length)
+			{
+				var stringSong:String = Std.string(splitSong[l + 1]);
+				var stringFirstLetter:String = stringSong.substring(0, 1);
 
 				var splitStringSong = stringSong.split('');
 				stringSong = Std.string(splitStringSong[0]).toUpperCase();
 
 				for (l in 0...splitStringSong.length)
-					stringSong += Std.string(splitStringSong[l+1]).toLowerCase();
+					stringSong += Std.string(splitStringSong[l + 1]).toLowerCase();
 
 				stringSong = coolReplace(stringSong, 'null', '');
 
-                coolSong += ' $stringSong';
-            }
+				coolSong += ' $stringSong';
+			}
 
 			song = coolSong.replace(' Null', '');
-            return song;
-        }
+			return song;
+		}
 
-        return swag;
+		return swag;
 	}
 
 	#if sys
@@ -133,13 +131,13 @@ class CoolUtil
 
 		return daList;
 	}
-	public static function dominantColor(sprite:flixel.FlxSprite):Int{
+	public static function dominantColor(sprite:flixel.FlxSprite):Int {
 		var countByColor:Map<Int, Int> = [];
 		for(col in 0...sprite.frameWidth){
 			for(row in 0...sprite.frameHeight){
 			  var colorOfThisPixel:Int = sprite.pixels.getPixel32(col, row);
 			  if(colorOfThisPixel != 0){
-				  if(countByColor.exists(colorOfThisPixel)){
+				  if(countByColor.exists(colorOfThisPixel)) {
 				    countByColor[colorOfThisPixel] =  countByColor[colorOfThisPixel] + 1;
 				  }else if(countByColor[colorOfThisPixel] != 13520687 - (2*13520687)){
 					 countByColor[colorOfThisPixel] = 1;
@@ -159,7 +157,7 @@ class CoolUtil
 		return maxKey;
 	}
 
-	public static function numberArray(max:Int, ?min = 0):Array<Int>
+	public static function numberArray(max:Int, min = 0):Array<Int>
 	{
 		var dumbArray:Array<Int> = [];
 		for (i in min...max)
@@ -170,11 +168,11 @@ class CoolUtil
 	}
 
 	//uhhhh does this even work at all? i'm starting to doubt
-	public static function precacheSound(sound:String, ?library:String = null):Void {
+	public static function precacheSound(sound:String, ?library:String):Void {
 		precacheSoundFile(Paths.sound(sound, library));
 	}
 
-	public static function precacheMusic(sound:String, ?library:String = null):Void {
+	public static function precacheMusic(sound:String, ?library:String):Void {
 		precacheSoundFile(Paths.music(sound, library));
 	}
 
